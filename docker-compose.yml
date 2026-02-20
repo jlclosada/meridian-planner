@@ -1,0 +1,33 @@
+version: '3.9'
+
+services:
+  backend:
+    build: ./backend
+    container_name: meridian-api
+    restart: unless-stopped
+    environment:
+      - SECRET_KEY=meridian-production-secret-change-me-2024
+    networks:
+      - meridian-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  frontend:
+    build: ./frontend
+    container_name: meridian-web
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - meridian-net
+
+networks:
+  meridian-net:
+    driver: bridge
