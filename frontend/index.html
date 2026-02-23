@@ -1278,6 +1278,239 @@ input[type="color"] {
   cursor: pointer; padding: 2px;
   background: white;
 }
+
+/* ── Admin badge ── */
+.admin-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-family: var(--font-mono); font-size: 0.6rem;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  background: var(--gold-bg); color: var(--gold);
+  border: 1px solid rgba(184,134,11,0.2);
+  padding: 1px 6px; border-radius: 4px; font-weight: 500;
+}
+
+/* ── Quick Capture FAB ── */
+.fab {
+  position: fixed; bottom: 1.5rem; right: 1.5rem;
+  z-index: 8000;
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--paper);
+  border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; font-weight: 300;
+  box-shadow: 0 4px 16px rgba(26,23,20,0.2);
+  transition: all 0.2s cubic-bezier(0.34,1.56,0.64,1);
+}
+.fab:hover { transform: scale(1.1); background: var(--ink2); }
+.fab:active { transform: scale(0.95); }
+
+/* ── Priority tooltip ── */
+.prio-tooltip {
+  position: absolute; z-index: 5000;
+  background: var(--ink); color: var(--paper);
+  border-radius: var(--r2); padding: 6px;
+  display: flex; flex-direction: column; gap: 3px;
+  box-shadow: var(--shadow-lg);
+  min-width: 110px;
+}
+.prio-option {
+  display: flex; align-items: center; gap: 7px;
+  padding: 5px 8px; border-radius: var(--r);
+  cursor: pointer; font-size: 0.75rem;
+  transition: background 0.1s;
+  font-family: var(--font-sans);
+  white-space: nowrap;
+}
+.prio-option:hover { background: rgba(255,255,255,0.12); }
+.prio-option.active { background: rgba(255,255,255,0.18); }
+
+/* ── Global Search Modal ── */
+.search-modal {
+  background: var(--paper);
+  border-radius: var(--r3);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--line2);
+  width: 100%; max-width: 560px;
+  max-height: 80vh; overflow: hidden;
+  display: flex; flex-direction: column;
+  animation: modal-up 0.18s cubic-bezier(0.34,1.2,0.64,1);
+}
+.search-input-wrap {
+  display: flex; align-items: center; gap: 10px;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--line);
+}
+.search-input-wrap input {
+  flex: 1; border: none; outline: none;
+  font-size: 1rem; font-family: var(--font-sans);
+  background: transparent; color: var(--ink);
+}
+.search-input-wrap input::placeholder { color: var(--ink4); }
+.search-icon { font-size: 0.9rem; color: var(--ink4); }
+.search-results { overflow-y: auto; max-height: calc(80vh - 60px); }
+.search-result {
+  display: flex; align-items: center; gap: 10px;
+  padding: 0.7rem 1.25rem;
+  cursor: pointer; border-bottom: 1px solid var(--line);
+  transition: background 0.1s;
+}
+.search-result:hover, .search-result.selected { background: var(--paper2); }
+.search-result-title { font-size: 0.875rem; color: var(--ink); flex: 1; }
+.search-result-meta { font-family: var(--font-mono); font-size: 0.65rem; color: var(--ink4); }
+.search-empty { text-align: center; padding: 2rem; color: var(--ink4); font-size: 0.82rem; }
+.search-shortcut { font-family: var(--font-mono); font-size: 0.62rem; color: var(--ink4); }
+
+/* ── Pomodoro / Focus Timer ── */
+.focus-widget {
+  background: white; border: 1px solid var(--line);
+  border-radius: var(--r3); padding: 1rem;
+  box-shadow: var(--shadow-sm); margin-bottom: 1rem;
+}
+.focus-timer-display {
+  font-family: var(--font-mono); font-size: 2.2rem;
+  font-weight: 400; color: var(--ink); letter-spacing: 0.04em;
+  text-align: center; margin: 0.5rem 0;
+}
+.focus-timer-display.running { color: var(--cobalt); }
+.focus-timer-display.break { color: var(--sage); }
+.focus-controls { display: flex; gap: 6px; justify-content: center; margin-top: 0.5rem; }
+.focus-phase { font-family: var(--font-mono); font-size: 0.62rem; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--ink4); text-align: center; margin-bottom: 0.25rem; }
+.focus-progress-ring { display: flex; justify-content: center; position: relative; margin: 0 auto; }
+
+/* ── Dashboard today-tasks section ── */
+.dash-task-row {
+  display: flex; align-items: center; gap: 8px;
+  padding: 5px 0; border-bottom: 1px solid var(--line);
+  transition: background 0.1s;
+}
+.dash-task-row:last-child { border-bottom: none; }
+.dash-task-row:hover { background: var(--paper2); border-radius: var(--r); }
+.dash-task-title { font-size: 0.82rem; color: var(--ink); flex: 1; min-width: 0;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dash-task-title.done-text { text-decoration: line-through; color: var(--ink4); }
+.dash-reschedule {
+  font-family: var(--font-mono); font-size: 0.65rem; color: var(--ink4);
+  cursor: pointer; padding: 2px 5px; border-radius: 3px;
+  border: 1px solid transparent; white-space: nowrap;
+  background: none; transition: all 0.12s;
+}
+.dash-reschedule:hover { border-color: var(--line2); color: var(--ink2); background: var(--paper3); }
+
+/* ── Task grouping in All Tasks ── */
+.task-group-header {
+  font-family: var(--font-mono); font-size: 0.65rem;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--ink4); padding: 1rem 0 0.4rem;
+  display: flex; align-items: center; gap: 8px;
+}
+.task-group-header::after {
+  content: ''; flex: 1; height: 1px; background: var(--line);
+}
+.task-group-count {
+  background: var(--paper3); color: var(--ink4);
+  font-family: var(--font-mono); font-size: 0.6rem;
+  padding: 1px 5px; border-radius: 3px;
+}
+
+/* ── Search bar in All Tasks ── */
+.tasks-search {
+  display: flex; align-items: center; gap: 8px;
+  background: white; border: 1.5px solid var(--line2);
+  border-radius: var(--r2); padding: 0.5rem 0.75rem;
+  margin-bottom: 1rem; transition: border-color 0.15s;
+}
+.tasks-search:focus-within { border-color: var(--ink3); }
+.tasks-search input {
+  flex: 1; border: none; outline: none;
+  font-size: 0.875rem; font-family: var(--font-sans);
+  background: transparent; color: var(--ink);
+}
+.tasks-search input::placeholder { color: var(--ink4); }
+.tasks-search-icon { color: var(--ink4); font-size: 0.85rem; }
+
+/* ── Inline priority badge ── */
+.prio-badge {
+  display: inline-flex; align-items: center; gap: 3px;
+  font-family: var(--font-mono); font-size: 0.62rem;
+  padding: 1px 5px; border-radius: 3px; cursor: pointer;
+  border: 1px solid transparent; transition: all 0.12s;
+  white-space: nowrap; position: relative;
+}
+.prio-badge:hover { border-color: var(--line2); background: var(--paper2); }
+.prio-badge.high { color: var(--rust); background: var(--rust-bg); border-color: rgba(192,82,42,0.15); }
+.prio-badge.medium { color: var(--gold); background: var(--gold-bg); border-color: rgba(184,134,11,0.15); }
+.prio-badge.low { color: var(--ink4); background: var(--paper3); }
+
+/* ── Recurring indicator ── */
+.recurring-badge {
+  font-family: var(--font-mono); font-size: 0.6rem;
+  color: var(--teal); background: var(--teal-bg);
+  padding: 1px 5px; border-radius: 3px;
+}
+
+/* ── Week view improvements ── */
+.week-task-chip.done-chip { opacity: 0.4; text-decoration: line-through; }
+
+/* ── Timeline proportional blocks ── */
+.timeline-task-block {
+  padding: 4px 8px; border-radius: var(--r); font-size: 0.8rem;
+  cursor: pointer; border-left: 3px solid; background: white;
+  box-shadow: var(--shadow-sm); margin-bottom: 2px;
+  transition: all 0.12s; position: relative; overflow: hidden;
+  min-height: 28px;
+}
+.timeline-task-block:hover { box-shadow: var(--shadow); transform: translateX(2px); }
+.timeline-task-block.done { opacity: 0.5; }
+.timeline-task-block.done .t-task-title { text-decoration: line-through; }
+
+/* ── Admin panel ── */
+.admin-panel {
+  background: var(--gold-bg); border: 1px solid rgba(184,134,11,0.2);
+  border-radius: var(--r2); padding: 0.75rem 1rem; margin-bottom: 1rem;
+}
+.admin-stat { display: flex; justify-content: space-between; padding: 2px 0;
+  font-size: 0.78rem; color: var(--ink2); }
+.admin-stat-val { font-family: var(--font-mono); font-weight: 600; color: var(--gold); }
+
+/* ── Date picker inline ── */
+.date-quick-btns { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 4px; }
+.date-quick-btn {
+  font-size: 0.7rem; font-family: var(--font-mono);
+  padding: 2px 7px; border-radius: 4px; cursor: pointer;
+  border: 1px solid var(--line2); background: transparent;
+  color: var(--ink3); transition: all 0.12s;
+}
+.date-quick-btn:hover { background: var(--paper3); border-color: var(--ink4); color: var(--ink); }
+
+/* ── Keyboard shortcut hint ── */
+.kbd {
+  font-family: var(--font-mono); font-size: 0.6rem;
+  padding: 1px 4px; border-radius: 3px;
+  background: var(--paper3); border: 1px solid var(--ink5);
+  color: var(--ink4); display: inline-block;
+}
+
+/* ── Context menu ── */
+.ctx-menu {
+  position: fixed; z-index: 9999;
+  background: var(--paper); border: 1px solid var(--line2);
+  border-radius: var(--r2); box-shadow: var(--shadow-lg);
+  padding: 4px; min-width: 160px;
+  animation: fade-in 0.1s ease;
+}
+.ctx-item {
+  padding: 6px 10px; border-radius: var(--r);
+  font-size: 0.8rem; cursor: pointer; color: var(--ink2);
+  display: flex; align-items: center; gap: 8px;
+  transition: background 0.1s;
+}
+.ctx-item:hover { background: var(--paper3); color: var(--ink); }
+.ctx-item.danger { color: var(--rust); }
+.ctx-item.danger:hover { background: var(--rust-bg); }
+.ctx-divider { height: 1px; background: var(--line); margin: 3px 0; }
 </style>
 </head>
 <body>
@@ -1297,7 +1530,7 @@ input[type="color"] {
 
     <div class="field"><label>Email</label><input id="l-email" type="email" placeholder="you@example.com" autocomplete="email"/></div>
     <div class="field"><label>Password</label><input id="l-pass" type="password" placeholder="••••••••" autocomplete="current-password"/></div>
-    <p class="demo-note">→ Use <b onclick="fillDemo()">demo@meridian.app</b> to explore with sample data</p>
+    <p class="demo-note">→ Use <b onclick="fillDemo()">demo@meridian.app</b> to explore · or <b onclick="fillAdmin()">jose@meridian.app</b> for admin</p>
     <button class="btn btn-ink" onclick="doLogin()">Enter Meridian →</button>
   </div>
 </div>
@@ -1319,7 +1552,10 @@ input[type="color"] {
       <div class="user-av" id="sb-av">?</div>
       <div class="user-info">
         <div class="user-name" id="sb-name">—</div>
-        <div class="user-role">Life Planner</div>
+        <div id="sb-role-wrap" style="display:flex;align-items:center;gap:4px;margin-top:1px">
+          <div class="user-role" id="sb-role">Life Planner</div>
+          <span class="admin-badge" id="sb-admin-badge" style="display:none">★ Admin</span>
+        </div>
       </div>
       <button class="btn-icon" onclick="logout()" title="Sign out" style="margin-left:auto">↩</button>
     </div>
@@ -1342,6 +1578,11 @@ input[type="color"] {
 
       <div class="nav-section-label">Notes</div>
       <div class="nav-item" onclick="nav('notes',this)"><span class="nav-icon">✦</span> Notes</div>
+
+      <div id="admin-nav-section" style="display:none">
+        <div class="nav-section-label">Admin</div>
+        <div class="nav-item" onclick="nav('admin',this)"><span class="nav-icon">⚙</span> Admin Panel</div>
+      </div>
     </nav>
 
     <div class="sidebar-footer">
@@ -1359,7 +1600,8 @@ input[type="color"] {
       </div>
       <div class="topbar-spacer"></div>
       <div class="topbar-actions">
-        <button class="btn btn-ghost btn-sm" onclick="openTaskModal()">+ Add Task</button>
+        <button class="btn btn-ghost btn-sm" onclick="openSearch()" title="Search (⌘K)" style="font-family:var(--font-mono);letter-spacing:0">⌕ Search</button>
+        <button class="btn btn-ghost btn-sm" onclick="openTaskModal()">+ Task</button>
         <button class="btn btn-ink btn-sm" onclick="openEventModal()">+ Event</button>
       </div>
     </div>
@@ -1387,6 +1629,22 @@ input[type="color"] {
             <div id="dash-habits-list"></div>
           </div>
         </div>
+        <div class="grid-2 mb-2">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Today's tasks</div>
+              <button class="btn-icon" onclick="nav('today')" title="Open Today">→</button>
+            </div>
+            <div id="dash-today-tasks"></div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Upcoming</div>
+              <button class="btn-icon" onclick="nav('tasks')" title="All Tasks">→</button>
+            </div>
+            <div id="dash-upcoming-list"></div>
+          </div>
+        </div>
         <div class="grid-2">
           <div class="card">
             <div class="card-header">
@@ -1397,10 +1655,10 @@ input[type="color"] {
           </div>
           <div class="card">
             <div class="card-header">
-              <div class="card-title">Upcoming</div>
-              <button class="btn-icon" onclick="nav('today')">→</button>
+              <div class="card-title">Backlog</div>
+              <button class="btn-icon" onclick="nav('tasks')" title="All Tasks">→</button>
             </div>
-            <div id="dash-upcoming-list"></div>
+            <div id="dash-backlog-preview"></div>
           </div>
         </div>
       </div>
@@ -1414,6 +1672,7 @@ input[type="color"] {
           </div>
           <div>
             <div class="card mb-2" id="day-summary-card"></div>
+            <div id="pomodoro-widget" class="mb-2"></div>
             <div class="backlog-section">
               <div class="backlog-header" onclick="toggleBacklog()">
                 <span class="backlog-title">📦 Backlog</span>
@@ -1459,9 +1718,14 @@ input[type="color"] {
         <div class="flex items-center justify-between mb-3">
           <div>
             <div class="section-title">All Tasks</div>
-            <div class="section-sub">Manage and organize everything</div>
+            <div class="section-sub" id="tasks-count-sub">Manage and organize everything</div>
           </div>
           <button class="btn btn-ink btn-sm" onclick="openTaskModal()">+ New Task</button>
+        </div>
+        <div class="tasks-search">
+          <span class="tasks-search-icon">⌕</span>
+          <input id="tasks-search-input" type="text" placeholder="Search tasks…" oninput="onTaskSearch(this.value)" autocomplete="off"/>
+          <button class="btn-icon" onclick="clearTaskSearch()" id="tasks-search-clear" style="display:none;color:var(--ink4)">✕</button>
         </div>
         <div class="tabs">
           <button class="tab active" onclick="filterTasks('all',this)">All</button>
@@ -1522,6 +1786,42 @@ input[type="color"] {
         </div>
         <div class="notes-grid" id="notes-grid"></div>
       </div>
+
+      <!-- ADMIN PANEL -->
+      <div class="page" id="page-admin">
+        <div class="flex items-center justify-between mb-3">
+          <div>
+            <div class="section-title">Admin Panel</div>
+            <div class="section-sub">Platform overview and management</div>
+          </div>
+          <span class="admin-badge">★ Admin Access</span>
+        </div>
+        <div class="grid-4 mb-2" id="admin-stat-cards"></div>
+        <div class="card mb-2">
+          <div class="card-header"><div class="card-title">Registered Users</div></div>
+          <div id="admin-users-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Quick Capture FAB ── -->
+<button class="fab" id="fab-btn" onclick="openTaskModal()" title="Quick add task (⌘K)">+</button>
+
+<!-- ── Context Menu ── -->
+<div class="ctx-menu" id="ctx-menu" style="display:none"></div>
+
+<!-- ── Global Search Overlay ── -->
+<div class="overlay" id="search-overlay">
+  <div class="search-modal">
+    <div class="search-input-wrap">
+      <span class="search-icon">⌕</span>
+      <input id="global-search-input" type="text" placeholder="Search tasks, habits, goals…" oninput="globalSearch(this.value)" autocomplete="off"/>
+      <span class="search-shortcut"><span class="kbd">Esc</span></span>
+    </div>
+    <div class="search-results" id="global-search-results">
+      <div class="search-empty">Start typing to search…</div>
     </div>
   </div>
 </div>
@@ -1539,7 +1839,16 @@ input[type="color"] {
       <input type="hidden" id="tm-id"/>
       <div class="field"><label>Title</label><input id="tm-title" type="text" placeholder="What needs to be done?"/></div>
       <div class="grid-2">
-        <div class="field"><label>Date</label><input id="tm-date" type="date"/></div>
+        <div class="field">
+          <label>Date</label>
+          <input id="tm-date" type="date"/>
+          <div class="date-quick-btns">
+            <button type="button" class="date-quick-btn" onclick="setTaskDate(0)">Today</button>
+            <button type="button" class="date-quick-btn" onclick="setTaskDate(1)">Tomorrow</button>
+            <button type="button" class="date-quick-btn" onclick="setTaskDate(7)">Next week</button>
+            <button type="button" class="date-quick-btn" onclick="setTaskDate(null)">No date</button>
+          </div>
+        </div>
         <div class="field"><label>Time</label><input id="tm-time" type="time"/></div>
       </div>
       <div class="grid-2">
@@ -1736,7 +2045,7 @@ input[type="color"] {
 
 <script>
 /* ╔══════════════════════════════════════════════════════════════╗
-   ║  MERIDIAN — Core JavaScript                                  ║
+   ║  MERIDIAN — Core JavaScript v2.0                             ║
    ╚══════════════════════════════════════════════════════════════╝ */
 
 const API = '/api';
@@ -1744,18 +2053,25 @@ let TOKEN = localStorage.getItem('mrd_tok') || null;
 let USER = null;
 
 // Current view state
-let viewDate = new Date();   // selected day for today view
+let viewDate = new Date();
 let weekStart = getWeekStart(new Date());
 let monthDate = new Date();
 let taskFilter = 'all';
+let taskSearchQuery = '';
 let editingTaskId = null;
 let editingNoteId = null;
 let taskColors = ['#3B5EA6','#5C7A6A','#7B4F8A','#B8860B','#C0522A','#2A7A7A','#A84E6A','#4A4540'];
 let noteColors = ['#FEF9C3','#DCFCE7','#DBEAFE','#F3E8FF','#FEE2E2','#FFF7ED','#F0FDF4','#FAF8F4'];
-
 let selectedTaskColor = '#3B5EA6';
 let selectedGoalColor = '#3B5EA6';
 let selectedNoteColor = '#FEF9C3';
+
+// Pomodoro state
+let pomodoroTimer = null;
+let pomodoroSeconds = 25 * 60;
+let pomodoroRunning = false;
+let pomodoroPhase = 'focus'; // 'focus' | 'break'
+let pomodoroCount = 0;
 
 /* ── Helpers ── */
 function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
@@ -1810,6 +2126,10 @@ function fillDemo() {
   document.getElementById('l-email').value = 'demo@meridian.app';
   document.getElementById('l-pass').value = 'demo';
 }
+function fillAdmin() {
+  document.getElementById('l-email').value = 'jose@meridian.app';
+  document.getElementById('l-pass').value = 'meridian2024';
+}
 async function doLogin() {
   const email = document.getElementById('l-email').value.trim();
   if (!email) { toast('Please enter your email','error'); return; }
@@ -1842,6 +2162,10 @@ function enterApp() {
   document.getElementById('app').style.display = 'grid';
   document.getElementById('sb-av').textContent = USER.avatar || USER.name[0];
   document.getElementById('sb-name').textContent = USER.name;
+  // Admin badge
+  const isAdmin = USER.role === 'admin';
+  document.getElementById('sb-admin-badge').style.display = isAdmin ? 'inline-flex' : 'none';
+  document.getElementById('admin-nav-section').style.display = isAdmin ? 'block' : 'none';
   // Set dates
   const now = new Date();
   viewDate = new Date(now.toISOString().slice(0,10)+'T00:00:00');
@@ -1863,11 +2187,14 @@ function enterApp() {
 /* ── Navigation ── */
 const PAGE_TITLES = {
   dashboard:'Dashboard',today:'Today',week:'Week',month:'Month',
-  tasks:'All Tasks',habits:'Habits',goals:'Goals',routines:'Routines',notes:'Notes'
+  tasks:'All Tasks',habits:'Habits',goals:'Goals',routines:'Routines',notes:'Notes',
+  admin:'Admin Panel'
 };
 function nav(name, el) {
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById('page-'+name).classList.add('active');
+  const page = document.getElementById('page-'+name);
+  if (!page) return;
+  page.classList.add('active');
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   if (el) el.classList.add('active');
   else {
@@ -1876,7 +2203,6 @@ function nav(name, el) {
     });
   }
   document.getElementById('topbar-title').textContent = PAGE_TITLES[name]||name;
-  // Load page data
   if (name==='dashboard') loadDashboard();
   if (name==='today') loadToday();
   if (name==='week') loadWeek();
@@ -1886,6 +2212,7 @@ function nav(name, el) {
   if (name==='goals') loadGoals();
   if (name==='routines') loadRoutines();
   if (name==='notes') loadNotes();
+  if (name==='admin') loadAdminPanel();
 }
 
 function updateTopbarDate() {
@@ -1971,7 +2298,7 @@ function selectSwatch(el, cid, light, color) {
    ╚══════════════════════════════════════════════════════════════╝ */
 async function loadDashboard() {
   const hour = new Date().getHours();
-  const greet = hour<12?'Good morning':'hour'<17?'Good afternoon':'Good evening';
+  const greet = hour<12?'Good morning':hour<17?'Good afternoon':'Good evening';
   document.getElementById('dash-greeting').textContent = `${greet}, ${USER?.name || 'friend'} ✦`;
   document.getElementById('dash-date-str').textContent = fmtDate(today());
 
@@ -1989,6 +2316,8 @@ async function loadDashboard() {
     renderDashHabits(habits, d.habits);
     renderDashGoals(goals);
     renderDashUpcoming(tasks);
+    renderDashTodayTasks(tasks);
+    renderDashBacklog(tasks);
 
     // Update nav badge
     const pendingToday = tasks.filter(t=>t.date===today()&&!t.done).length;
@@ -2064,25 +2393,73 @@ function renderDashGoals(goals) {
 }
 
 function renderDashUpcoming(tasks) {
+  const todayStr = today();
   const upcoming = tasks
-    .filter(t=>!t.done && t.date && t.date >= today())
+    .filter(t=>!t.done && t.date && t.date > todayStr)
     .sort((a,b)=>{ if(a.date!==b.date) return a.date.localeCompare(b.date); return (a.time||'99').localeCompare(b.time||'99'); })
     .slice(0,5);
   if (!upcoming.length) {
-    document.getElementById('dash-upcoming-list').innerHTML = `<div class="empty-state" style="padding:1.5rem 0"><div class="empty-title" style="font-size:0.8rem;font-style:italic">You're all caught up ✦</div></div>`;
+    document.getElementById('dash-upcoming-list').innerHTML = `<div class="empty-state" style="padding:1.5rem 0"><div class="empty-title" style="font-size:0.8rem;font-style:italic">Nothing upcoming ✦</div><button class="btn btn-ghost btn-sm mt-1" onclick="openTaskModal()">+ Add task</button></div>`;
     return;
   }
   document.getElementById('dash-upcoming-list').innerHTML = upcoming.map(t=>{
-    const isToday = t.date === today();
-    return `<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--line)">
-      <div style="width:3px;height:24px;border-radius:2px;background:${t.color};flex-shrink:0"></div>
+    return `<div class="dash-task-row">
+      <div style="width:3px;height:20px;border-radius:2px;background:${t.color};flex-shrink:0"></div>
       <div style="flex:1;min-width:0">
         <div style="font-size:0.82rem;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(t.title)}</div>
-        <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--ink4)">${isToday?'Today':fmtDateShort(t.date)}${t.time?' · '+t.time:''}</div>
+        <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--ink4)">${fmtDateShort(t.date)}${t.time?' · '+t.time:''}</div>
       </div>
-      ${prioDot(t.priority)}
+      <span class="prio-badge ${t.priority}" onclick="event.stopPropagation();showPrioTooltip(event,'${t.id}',this)">${t.priority==='high'?'↑':t.priority==='low'?'↓':'·'}</span>
     </div>`;
   }).join('');
+}
+
+function renderDashTodayTasks(tasks) {
+  const todayStr = today();
+  const todayTasks = tasks
+    .filter(t => t.date === todayStr)
+    .sort((a,b) => (a.time||'99').localeCompare(b.time||'99'));
+  const el = document.getElementById('dash-today-tasks');
+  if (!el) return;
+  if (!todayTasks.length) {
+    el.innerHTML = `<div class="empty-state" style="padding:1.5rem 0"><div class="empty-icon">☀</div><div class="empty-title" style="font-size:0.8rem">No tasks today</div><button class="btn btn-ghost btn-sm mt-1" onclick="openTaskModal()">+ Add task</button></div>`;
+    return;
+  }
+  el.innerHTML = todayTasks.map(t => `
+    <div class="dash-task-row" id="dtr-${t.id}">
+      <div style="width:3px;height:20px;border-radius:2px;background:${t.color};flex-shrink:0"></div>
+      <div class="task-check ${t.done?'checked':''}" onclick="dashToggleTask('${t.id}',${!t.done})" style="width:15px;height:15px;border-radius:3px;border:1.5px solid var(--ink4);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.15s;${t.done?'background:var(--ink);border-color:var(--ink)':''}">
+        ${t.done?'<span style="font-size:8px;color:var(--paper);font-weight:700">✓</span>':''}
+      </div>
+      <div class="dash-task-title ${t.done?'done-text':''}">${esc(t.title)}</div>
+      ${t.time?`<span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--ink4)">${t.time}</span>`:''}
+      <span class="prio-badge ${t.priority}" title="Click to change priority" onclick="event.stopPropagation();showPrioTooltip(event,'${t.id}',this)">${t.priority==='high'?'↑':t.priority==='low'?'↓':'·'} ${t.priority}</span>
+      <button class="dash-reschedule" onclick="rescheduleTask('${t.id}',1)" title="Move to tomorrow">→ tmr</button>
+    </div>`).join('');
+}
+
+function renderDashBacklog(tasks) {
+  const backlog = tasks.filter(t => !t.date && !t.done).slice(0, 5);
+  const el = document.getElementById('dash-backlog-preview');
+  if (!el) return;
+  if (!backlog.length) {
+    el.innerHTML = `<div style="font-size:0.78rem;color:var(--ink4);text-align:center;padding:1.5rem 0">Backlog is empty ✦</div>`;
+    return;
+  }
+  el.innerHTML = backlog.map(t => `
+    <div class="dash-task-row">
+      <div style="width:3px;height:18px;border-radius:2px;background:${t.color};flex-shrink:0"></div>
+      <div class="dash-task-title">${esc(t.title)}</div>
+      <span class="tag tag-${t.category}" style="font-size:0.6rem">${t.category}</span>
+      <button class="dash-reschedule" onclick="rescheduleTask('${t.id}',0)" title="Schedule for today">+ today</button>
+    </div>`).join('') +
+    (tasks.filter(t=>!t.date&&!t.done).length > 5 ? `<div style="font-size:0.75rem;color:var(--ink4);text-align:center;padding:4px 0;cursor:pointer" onclick="nav('tasks')">+${tasks.filter(t=>!t.date&&!t.done).length-5} more in backlog →</div>` : '');
+}
+
+async function dashToggleTask(id, done) {
+  await api(`/tasks/${id}`,{method:'PATCH',body:JSON.stringify({done})});
+  if (done) toast('Done ✓','success');
+  loadDashboard();
 }
 
 /* ╔══════════════════════════════════════════════════════════════╗
@@ -2101,6 +2478,7 @@ async function loadToday() {
     renderTimeline(tasks, dateStr);
     renderDaySummary(tasks, dateStr);
     renderBacklog(backlog);
+    renderPomodoro();
     buildMiniCal();
   } catch(e) { console.error(e); }
 }
@@ -2310,12 +2688,12 @@ async function loadWeek() {
         const [th] = t.time.split(':').map(Number);
         return th===h;
       });
-      html += `<div class="week-cell ${isToday?'today-col':''}" ondragover="event.preventDefault()" ondrop="dropOnWeekCell(event,'${dStr}','${String(h).padStart(2,'0')}:00')">
+      html += `<div class="week-cell ${isToday?'today-col':''}" ondragover="event.preventDefault()" ondrop="dropOnWeekCell(event,'${dStr}','${String(h).padStart(2,'0')}:00')" onclick="jumpToDate('${dStr}')">
         ${hourTasks.map(t=>`
-          <div class="week-task-chip" draggable="true" ondragstart="dragTask('${t.id}',this)"
+          <div class="week-task-chip ${t.done?'done-chip':''}" draggable="true" ondragstart="dragTask('${t.id}',this)"
                style="border-left-color:${t.color};background:${t.color}18;color:${t.color}"
-               onclick="openTaskEdit('${t.id}')" title="${esc(t.title)}">
-            ${esc(t.title)}
+               onclick="event.stopPropagation();openTaskEdit('${t.id}')" title="${esc(t.title)}${t.done?' ✓':''}">
+            ${t.done?'✓ ':''}${esc(t.title)}
           </div>`).join('')}
       </div>`;
     }
@@ -2406,7 +2784,7 @@ function goThisMonth() { monthDate = new Date(new Date().getFullYear(), new Date
 async function loadAllTasks() {
   const r = await api('/tasks');
   const tasks = await r.json();
-  renderAllTasks(tasks, taskFilter);
+  renderAllTasks(tasks, taskFilter, taskSearchQuery);
 }
 
 function filterTasks(f, el) {
@@ -2416,38 +2794,97 @@ function filterTasks(f, el) {
   loadAllTasks();
 }
 
-function renderAllTasks(tasks, filter) {
+function onTaskSearch(q) {
+  taskSearchQuery = q.trim().toLowerCase();
+  document.getElementById('tasks-search-clear').style.display = taskSearchQuery ? 'flex' : 'none';
+  loadAllTasks();
+}
+
+function clearTaskSearch() {
+  taskSearchQuery = '';
+  document.getElementById('tasks-search-input').value = '';
+  document.getElementById('tasks-search-clear').style.display = 'none';
+  loadAllTasks();
+}
+
+function renderAllTasks(tasks, filter, searchQ) {
   let filtered = tasks;
   if (filter==='pending') filtered = tasks.filter(t=>!t.done);
   else if (filter==='done') filtered = tasks.filter(t=>t.done);
   else if (['work','health','learning','personal'].includes(filter)) filtered = tasks.filter(t=>t.category===filter);
 
-  const sorted = filtered.sort((a,b)=>{
-    if (a.done!==b.done) return a.done?1:-1;
-    if (a.date&&b.date) return a.date.localeCompare(b.date)||(a.time||'99').localeCompare(b.time||'99');
-    return a.date?-1:b.date?1:0;
-  });
+  if (searchQ) {
+    filtered = filtered.filter(t =>
+      t.title.toLowerCase().includes(searchQ) ||
+      (t.notes||'').toLowerCase().includes(searchQ) ||
+      (t.category||'').toLowerCase().includes(searchQ)
+    );
+  }
+
+  // Update subtitle count
+  const sub = document.getElementById('tasks-count-sub');
+  if (sub) sub.textContent = `${filtered.length} task${filtered.length!==1?'s':''} ${searchQ?`matching "${searchQ}"`:filter==='all'?'total':''}`;
+
+  if (!filtered.length) {
+    document.getElementById('all-tasks-list').innerHTML =
+      `<div class="empty-state"><div class="empty-icon">◎</div><div class="empty-title">${searchQ?'No results found':'No tasks here'}</div><div class="empty-sub">${searchQ?'Try a different search':'All clear!'}</div></div>`;
+    return;
+  }
 
   const todayStr = today();
-  document.getElementById('all-tasks-list').innerHTML = sorted.length ? sorted.map(t=>`
-    <div class="task-item ${t.done?'done':''}" id="ti-${t.id}">
-      <div class="task-color-bar" style="background:${t.color}"></div>
-      <div class="task-check ${t.done?'checked':''}" onclick="toggleTask('${t.id}',${!t.done})"></div>
-      <div class="task-body">
-        <div class="task-title-text">${esc(t.title)}</div>
-        <div class="task-meta-row">
-          ${t.date?`<span class="task-time">${t.date===todayStr?'Today':fmtDateShort(t.date)}${t.time?' at '+t.time:''}</span>`:'<span class="task-time" style="color:var(--ink5)">No date</span>'}
-          ${t.duration?`<span class="task-dur">${t.duration}m</span>`:''}
-          <span class="tag tag-${t.category}">${t.category}</span>
-          ${prioDot(t.priority)}
+  const tomorrow = new Date(Date.now()+86400000).toISOString().slice(0,10);
+
+  // Group by date
+  const groups = {};
+  for (const t of filtered) {
+    const key = t.date || '__backlog__';
+    if (!groups[key]) groups[key] = [];
+    groups[key].push(t);
+  }
+
+  // Sort groups: overdue → today → tomorrow → future → backlog
+  const sortedKeys = Object.keys(groups).sort((a,b) => {
+    if (a==='__backlog__') return 1;
+    if (b==='__backlog__') return -1;
+    return a.localeCompare(b);
+  });
+
+  let html = '';
+  for (const key of sortedKeys) {
+    const groupTasks = groups[key].sort((a,b)=>{
+      if (a.done!==b.done) return a.done?1:-1;
+      return (a.time||'99').localeCompare(b.time||'99');
+    });
+    let groupLabel = '';
+    if (key==='__backlog__') groupLabel = '📦 Backlog — No date';
+    else if (key===todayStr) groupLabel = '☀ Today';
+    else if (key===tomorrow) groupLabel = '→ Tomorrow';
+    else if (key<todayStr) groupLabel = `⚠ Overdue · ${fmtDateShort(key)}`;
+    else groupLabel = fmtDate(key).split(',').slice(0,2).join(',');
+
+    html += `<div class="task-group-header">${groupLabel}<span class="task-group-count">${groupTasks.length}</span></div>`;
+    html += groupTasks.map(t=>`
+      <div class="task-item ${t.done?'done':''}" id="ti-${t.id}" draggable="true" ondragstart="dragTask('${t.id}',this)" oncontextmenu="showCtxMenu(event,'${t.id}')">
+        <div class="task-color-bar" style="background:${t.color}"></div>
+        <div class="task-check ${t.done?'checked':''}" onclick="toggleTask('${t.id}',${!t.done})"></div>
+        <div class="task-body">
+          <div class="task-title-text">${esc(t.title)}</div>
+          <div class="task-meta-row">
+            ${t.date?`<span class="task-time">${t.date===todayStr?'Today':t.date===tomorrow?'Tomorrow':fmtDateShort(t.date)}${t.time?' · '+t.time:''}</span>`:'<span class="task-time" style="color:var(--ink5)">Backlog</span>'}
+            ${t.duration?`<span class="task-dur">${t.duration}m</span>`:''}
+            <span class="tag tag-${t.category}">${t.category}</span>
+            <span class="prio-badge ${t.priority}" onclick="event.stopPropagation();showPrioTooltip(event,'${t.id}',this)" title="Click to change priority">${t.priority==='high'?'↑ high':t.priority==='low'?'↓ low':'· med'}</span>
+            ${t.recurring?`<span class="recurring-badge">↻</span>`:''}
+          </div>
         </div>
-      </div>
-      <div class="task-actions">
-        <button class="btn-icon" onclick="openTaskEdit('${t.id}')">✎</button>
-        <button class="btn-icon" style="color:var(--rust)" onclick="deleteTask('${t.id}')">✕</button>
-      </div>
-    </div>`).join('') :
-    `<div class="empty-state"><div class="empty-icon">◎</div><div class="empty-title">No tasks here</div><div class="empty-sub">All clear!</div></div>`;
+        <div class="task-actions">
+          <button class="btn-icon" title="Edit" onclick="openTaskEdit('${t.id}')">✎</button>
+          <button class="btn-icon" title="Move to today" onclick="rescheduleTask('${t.id}',0)" style="font-size:0.75rem">☀</button>
+          <button class="btn-icon" style="color:var(--rust)" title="Delete" onclick="deleteTask('${t.id}')">✕</button>
+        </div>
+      </div>`).join('');
+  }
+  document.getElementById('all-tasks-list').innerHTML = html;
 }
 
 /* ╔══════════════════════════════════════════════════════════════╗
@@ -2858,14 +3295,217 @@ function refreshCurrentPage() {
     'page-goals': loadGoals,
     'page-routines': loadRoutines,
     'page-notes': loadNotes,
+    'page-admin': loadAdminPanel,
   };
   map[active.id]?.();
 }
 
-// Keyboard shortcuts
+/* ── Quick date helpers in task modal ── */
+function setTaskDate(daysOffset) {
+  const inp = document.getElementById('tm-date');
+  if (daysOffset === null) { inp.value = ''; return; }
+  inp.value = new Date(Date.now()+daysOffset*86400000).toISOString().slice(0,10);
+}
+
+/* ── Priority tooltip ── */
+function showPrioTooltip(event, taskId, anchor) {
+  event.stopPropagation();
+  closePrioTooltip();
+  const tt = document.createElement('div');
+  tt.className = 'prio-tooltip'; tt.id = 'prio-tt';
+  const priorities = [
+    {val:'high', label:'↑ High', cls:'prio-high'},
+    {val:'medium', label:'· Medium', cls:'prio-medium'},
+    {val:'low', label:'↓ Low', cls:'prio-low'},
+  ];
+  tt.innerHTML = priorities.map(p=>`
+    <div class="prio-option" onclick="setPriority('${taskId}','${p.val}')">
+      <div class="priority-dot ${p.cls}" style="width:7px;height:7px;border-radius:50%;flex-shrink:0"></div>${p.label}
+    </div>`).join('');
+  document.body.appendChild(tt);
+  const rect = anchor.getBoundingClientRect();
+  const top = rect.bottom + 4;
+  const left = Math.min(rect.left, window.innerWidth - 120);
+  tt.style.position = 'fixed';
+  tt.style.top = top+'px';
+  tt.style.left = left+'px';
+  setTimeout(()=>document.addEventListener('click', closePrioTooltip, {once:true}), 50);
+}
+function closePrioTooltip() {
+  document.getElementById('prio-tt')?.remove();
+}
+async function setPriority(taskId, priority) {
+  closePrioTooltip();
+  await api(`/tasks/${taskId}`,{method:'PATCH',body:JSON.stringify({priority})});
+  toast(`Priority set to ${priority}`,'info');
+  refreshCurrentPage();
+}
+
+/* ── Context menu ── */
+function showCtxMenu(event, taskId) {
+  event.preventDefault();
+  closeCtxMenu();
+  const menu = document.getElementById('ctx-menu');
+  menu.innerHTML = `
+    <div class="ctx-item" onclick="openTaskEdit('${taskId}');closeCtxMenu()">✎ Edit task</div>
+    <div class="ctx-item" onclick="rescheduleTask('${taskId}',0);closeCtxMenu()">☀ Schedule today</div>
+    <div class="ctx-item" onclick="rescheduleTask('${taskId}',1);closeCtxMenu()">→ Move to tomorrow</div>
+    <div class="ctx-item" onclick="rescheduleTask('${taskId}',7);closeCtxMenu()">📅 Next week</div>
+    <div class="ctx-divider"></div>
+    <div class="ctx-item danger" onclick="deleteTask('${taskId}');closeCtxMenu()">✕ Delete</div>
+  `;
+  menu.style.display = 'block';
+  menu.style.top = event.clientY+'px';
+  menu.style.left = Math.min(event.clientX, window.innerWidth-170)+'px';
+  setTimeout(()=>document.addEventListener('click', closeCtxMenu, {once:true}), 50);
+}
+function closeCtxMenu() { document.getElementById('ctx-menu').style.display='none'; }
+
+/* ── Global Search ── */
+function openSearch() {
+  openModal('search-overlay');
+  setTimeout(()=>document.getElementById('global-search-input')?.focus(), 50);
+  document.getElementById('global-search-results').innerHTML='<div class="search-empty">Start typing to search…</div>';
+  document.getElementById('global-search-input').value='';
+}
+async function globalSearch(q) {
+  const el = document.getElementById('global-search-results');
+  if (!q.trim()) { el.innerHTML='<div class="search-empty">Start typing to search…</div>'; return; }
+  try {
+    const r = await api('/tasks?q='+encodeURIComponent(q));
+    const tasks = await r.json();
+    if (!tasks.length) { el.innerHTML='<div class="search-empty">No results found for "'+esc(q)+'"</div>'; return; }
+    const todayStr = today();
+    el.innerHTML = tasks.slice(0,15).map(t=>`
+      <div class="search-result" onclick="openTaskEdit('${t.id}');closeModal('search-overlay')">
+        <div style="width:3px;height:20px;border-radius:2px;background:${t.color};flex-shrink:0"></div>
+        <div class="search-result-title ${t.done?'done-text':''}">${esc(t.title)}</div>
+        <div class="search-result-meta">${t.date?(t.date===todayStr?'Today':fmtDateShort(t.date)):'Backlog'}</div>
+        <span class="tag tag-${t.category}" style="font-size:0.6rem">${t.category}</span>
+      </div>`).join('');
+  } catch { el.innerHTML='<div class="search-empty">Search error</div>'; }
+}
+
+/* ── Admin Panel ── */
+async function loadAdminPanel() {
+  try {
+    const r = await api('/admin/stats');
+    if (!r.ok) {
+      document.getElementById('admin-stat-cards').innerHTML='<div class="empty-state">Admin access required</div>';
+      return;
+    }
+    const d = await r.json();
+    document.getElementById('admin-stat-cards').innerHTML = [
+      {label:'Users', val:d.users, icon:'👤', col:'#3B5EA6'},
+      {label:'Tasks', val:d.tasks, icon:'◎', col:'#5C7A6A'},
+      {label:'Habits', val:d.habits, icon:'⟳', col:'#7B4F8A'},
+      {label:'Goals', val:d.goals, icon:'◇', col:'#B8860B'},
+    ].map(c=>`
+      <div class="stat-card">
+        <div class="stat-top"><div class="stat-label">${c.label}</div><div class="stat-icon">${c.icon}</div></div>
+        <div class="stat-value" style="color:${c.col}">${c.val}</div>
+      </div>`).join('');
+    document.getElementById('admin-users-list').innerHTML = d.user_list.map(u=>`
+      <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--ink3);color:var(--paper);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:600">${esc((u.name||'?')[0])}</div>
+        <div style="flex:1">
+          <div style="font-size:0.875rem;font-weight:500">${esc(u.name)}</div>
+          <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--ink4)">${esc(u.email)}</div>
+        </div>
+        ${u.role==='admin'?'<span class="admin-badge">★ Admin</span>':'<span style="font-family:var(--font-mono);font-size:0.62rem;color:var(--ink4)">user</span>'}
+      </div>`).join('');
+  } catch(e) { console.error(e); }
+}
+
+/* ── Pomodoro Timer ── */
+function renderPomodoro() {
+  const container = document.getElementById('pomodoro-widget');
+  if (!container) return;
+  const mins = Math.floor(pomodoroSeconds/60);
+  const secs = pomodoroSeconds%60;
+  const label = pomodoroPhase==='focus'?`Focus · Session ${pomodoroCount+1}`:'Short Break';
+  const totalSecs = pomodoroPhase==='focus'?25*60:5*60;
+  const pct = ((totalSecs-pomodoroSeconds)/totalSecs)*100;
+  const circumference = 2*Math.PI*28;
+  container.innerHTML = `
+    <div class="focus-widget">
+      <div class="card-header" style="margin-bottom:0.5rem">
+        <div class="card-title">Pomodoro Timer</div>
+        <button class="btn-icon" onclick="resetPomodoro()" title="Reset">↺</button>
+      </div>
+      <div class="focus-phase">${label}</div>
+      <div class="focus-progress-ring">
+        <svg width="72" height="72" viewBox="0 0 72 72" style="transform:rotate(-90deg)">
+          <circle cx="36" cy="36" r="28" fill="none" stroke="var(--paper3)" stroke-width="5"/>
+          <circle cx="36" cy="36" r="28" fill="none" stroke="${pomodoroPhase==='focus'?'var(--cobalt)':'var(--sage)'}" stroke-width="5"
+            stroke-linecap="round"
+            stroke-dasharray="${circumference}" stroke-dashoffset="${circumference*(1-pct/100)}"
+            style="transition:stroke-dashoffset 1s linear"/>
+        </svg>
+        <div class="ring-center">
+          <div class="${pomodoroRunning?'running':''}" style="font-family:var(--font-mono);font-size:1.2rem;color:${pomodoroPhase==='break'?'var(--sage)':'var(--ink)'}">
+            ${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}
+          </div>
+        </div>
+      </div>
+      <div class="focus-controls">
+        <button class="btn btn-ghost btn-sm" onclick="${pomodoroRunning?'pausePomodoro()':'startPomodoro()'}">${pomodoroRunning?'⏸ Pause':'▶ Start'}</button>
+        <button class="btn btn-ghost btn-sm" onclick="skipPhase()">⏭ Skip</button>
+      </div>
+    </div>`;
+}
+function startPomodoro() {
+  pomodoroRunning = true;
+  pomodoroTimer = setInterval(()=>{
+    pomodoroSeconds--;
+    if (pomodoroSeconds<=0) {
+      clearInterval(pomodoroTimer); pomodoroRunning=false;
+      if (pomodoroPhase==='focus') {
+        pomodoroCount++; pomodoroPhase='break'; pomodoroSeconds=5*60;
+        toast('Focus session done! Take a break 🎉','success');
+      } else {
+        pomodoroPhase='focus'; pomodoroSeconds=25*60;
+        toast('Break over — focus time! 💪','info');
+      }
+    }
+    renderPomodoro();
+  }, 1000);
+  renderPomodoro();
+}
+function pausePomodoro() { clearInterval(pomodoroTimer); pomodoroRunning=false; renderPomodoro(); }
+function resetPomodoro() {
+  clearInterval(pomodoroTimer); pomodoroRunning=false;
+  pomodoroSeconds=25*60; pomodoroPhase='focus'; pomodoroCount=0; renderPomodoro();
+}
+function skipPhase() {
+  clearInterval(pomodoroTimer); pomodoroRunning=false;
+  if (pomodoroPhase==='focus') { pomodoroCount++; pomodoroPhase='break'; pomodoroSeconds=5*60; }
+  else { pomodoroPhase='focus'; pomodoroSeconds=25*60; }
+  renderPomodoro();
+}
+
+/* ── rescheduleTask ── */
+async function rescheduleTask(id, daysFromNow) {
+  const dateVal = daysFromNow===0?today():new Date(Date.now()+daysFromNow*86400000).toISOString().slice(0,10);
+  await api(`/tasks/${id}`,{method:'PATCH',body:JSON.stringify({date:dateVal})});
+  toast(daysFromNow===0?'Scheduled for today':'Moved!','success');
+  refreshCurrentPage();
+}
+
+/* ── Keyboard shortcuts ── */
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') document.querySelectorAll('.overlay.open').forEach(o=>o.classList.remove('open'));
-  if ((e.metaKey||e.ctrlKey) && e.key==='k') { e.preventDefault(); openTaskModal(); }
+  const tag = document.activeElement?.tagName;
+  const isInput = tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT';
+  if (e.key==='Escape') {
+    document.querySelectorAll('.overlay.open').forEach(o=>o.classList.remove('open'));
+    closePrioTooltip(); closeCtxMenu();
+  }
+  if ((e.metaKey||e.ctrlKey) && e.key==='k') { e.preventDefault(); openSearch(); }
+  if ((e.metaKey||e.ctrlKey) && e.key==='n') { e.preventDefault(); openTaskModal(); }
+  if (!isInput && e.key==='1') nav('dashboard');
+  if (!isInput && e.key==='2') nav('today');
+  if (!isInput && e.key==='3') nav('week');
+  if (!isInput && e.key==='4') nav('tasks');
 });
 
 // Init
