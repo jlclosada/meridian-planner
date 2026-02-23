@@ -181,19 +181,19 @@ NOTES[DU] = [
 # ─── Admin (José) data ────────────────────────────────────────────────────────
 TASKS[AU] = [
     {"id": str(uuid.uuid4()), "title": "Review Meridian feature roadmap", "category": "work",
-     "priority": "high", "done": False, "date": ds(0), "time": ts(9), "duration": 60,
+     "priority": "high", "status": "in_progress", "done": False, "date": ds(0), "time": ts(9), "duration": 60,
      "color": "#3B5EA6", "tags": ["meridian", "product"], "notes": "Plan next sprint", "recurring": None, "order": 0},
     {"id": str(uuid.uuid4()), "title": "Architecture review session", "category": "work",
-     "priority": "high", "done": False, "date": ds(0), "time": ts(11), "duration": 90,
+     "priority": "high", "status": "todo", "done": False, "date": ds(0), "time": ts(11), "duration": 90,
      "color": "#3B5EA6", "tags": ["architecture"], "notes": "", "recurring": None, "order": 1},
     {"id": str(uuid.uuid4()), "title": "Workout", "category": "health",
-     "priority": "medium", "done": False, "date": ds(0), "time": ts(7), "duration": 45,
+     "priority": "medium", "status": "todo", "done": False, "date": ds(0), "time": ts(7), "duration": 45,
      "color": "#5C7A6A", "tags": ["fitness"], "notes": "", "recurring": "mon,wed,fri", "order": 2},
     {"id": str(uuid.uuid4()), "title": "Plan Q2 OKRs", "category": "work",
-     "priority": "high", "done": False, "date": ds(1), "time": ts(10), "duration": 60,
+     "priority": "high", "status": "todo", "done": False, "date": ds(1), "time": ts(10), "duration": 60,
      "color": "#3B5EA6", "tags": ["okr", "planning"], "notes": "", "recurring": None, "order": 0},
     {"id": str(uuid.uuid4()), "title": "Read: System Design Interview", "category": "learning",
-     "priority": "medium", "done": False, "date": ds(0), "time": ts(20), "duration": 30,
+     "priority": "medium", "status": "todo", "done": False, "date": ds(0), "time": ts(20), "duration": 30,
      "color": "#7B4F8A", "tags": ["reading"], "notes": "", "recurring": "daily", "order": 3},
 ]
 HABITS[AU] = [
@@ -369,6 +369,7 @@ def create_task():
         "title": d.get('title', 'New task'),
         "category": d.get('category', 'personal'),
         "priority": d.get('priority', 'medium'),
+        "status": d.get('status', 'todo'),
         "done": False,
         "date": d.get('date'),
         "time": d.get('time'),
@@ -398,6 +399,14 @@ def update_task(tid):
     for t in TASKS.get(uid, []):
         if t['id'] == tid:
             t.update({k: v for k, v in data.items() if k != 'id'})
+            # Keep done and status in sync
+            if 'status' in data and 'done' not in data:
+                t['done'] = data['status'] == 'completed'
+            elif 'done' in data and 'status' not in data:
+                if data['done'] and t.get('status') not in ('completed',):
+                    t['status'] = 'completed'
+                elif not data['done'] and t.get('status') == 'completed':
+                    t['status'] = 'todo'
             return jsonify(t)
     return jsonify({"error": "Not found"}), 404
 
