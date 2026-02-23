@@ -9,8 +9,13 @@ import type {
 export const authApi = {
   login: (email: string, password: string) =>
     api.post<{ token: string; user: User }>('/auth/login', { email, password }),
+  signup: (email: string, password: string, name: string) =>
+    api.post<{ token: string; user: User }>('/auth/signup', { email, password, name }),
+  google: (token: string) =>
+    api.post<{ token: string; user: User }>('/auth/google', { token }),
   me: () => api.get<User>('/auth/me'),
   updateMe: (data: Partial<User>) => api.patch<User>('/auth/me', data),
+  logout: () => api.post('/auth/logout'),
 }
 
 // ── Tasks ────────────────────────────────────────────────────────────────────

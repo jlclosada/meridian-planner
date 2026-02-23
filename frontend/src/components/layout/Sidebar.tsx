@@ -2,12 +2,12 @@ import { useAppStore } from '@/stores/appStore'
 import { useAuthStore } from '@/stores/authStore'
 import {
   LayoutDashboard, Sun, CalendarDays, CalendarRange, CheckSquare,
-  Repeat, Target, Scroll, StickyNote, ShieldCheck,
+  Repeat, Target, Scroll, StickyNote, ShieldCheck, Settings,
 } from 'lucide-react'
 import clsx from 'clsx'
 import './Sidebar.css'
 
-type Page = 'dashboard' | 'today' | 'week' | 'month' | 'tasks' | 'habits' | 'goals' | 'routines' | 'notes' | 'admin'
+type Page = 'dashboard' | 'today' | 'week' | 'month' | 'tasks' | 'habits' | 'goals' | 'routines' | 'notes' | 'admin' | 'profile'
 
 const NAV_ITEMS: { page: Page; label: string; icon: typeof LayoutDashboard }[] = [
   { page: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -28,7 +28,7 @@ export default function Sidebar() {
   return (
     <aside className="sidebar">
       <div className="sidebar-brand">
-        <span className="brand-icon">◇</span>
+        <div className="brand-icon">◇</div>
         <span className="brand-text">Meridian</span>
       </div>
 
@@ -59,12 +59,13 @@ export default function Sidebar() {
       </nav>
 
       <div className="sidebar-footer">
-        <div className="sidebar-user">
+        <div className="sidebar-user" onClick={() => navigate('profile')} style={{ cursor: 'pointer' }}>
           <div className="user-avatar">{user?.avatar || '?'}</div>
-          <div>
+          <div style={{ flex: 1, minWidth: 0 }}>
             <div className="sidebar-user-name">{user?.name}</div>
             <div className="sidebar-user-email">{user?.email}</div>
           </div>
+          <Settings size={14} style={{ color: 'var(--ink4)', flexShrink: 0 }} />
         </div>
       </div>
     </aside>

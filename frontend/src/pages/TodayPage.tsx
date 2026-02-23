@@ -32,6 +32,11 @@ export default function TodayPage() {
 
   useEffect(() => { load() }, [load])
 
+  useEffect(() => {
+    const handler = () => load()
+    window.addEventListener('meridian:refresh', handler)
+    return () => window.removeEventListener('meridian:refresh', handler)
+  }, [load])
   const toggleTask = async (id: string, done: boolean) => {
     await tasksApi.update(id, { done, status: done ? 'completed' : 'todo' })
     if (done) toast.success('Done ✓')
@@ -106,8 +111,9 @@ export default function TodayPage() {
                 <div className="hour-label">{hLabel}</div>
                 <div
                   className="timeline-slot"
-                  onDragOver={e => e.preventDefault()}
-                  onDrop={e => onDrop(e, `${String(h).padStart(2, '0')}:00`)}
+                  onDragOver={e => { e.preventDefault(); e.currentTarget.classList.add('drag-over') }}
+                  onDragLeave={e => e.currentTarget.classList.remove('drag-over')}
+                  onDrop={e => { e.currentTarget.classList.remove('drag-over'); onDrop(e, `${String(h).padStart(2, '0')}:00`) }}
                 >
                   {hourTasks.map(t => (
                     <TaskRow key={t.id} task={t} onToggle={toggleTask} onClick={() => openTaskDetail(t.id)} />
@@ -141,12 +147,24 @@ export default function TodayPage() {
         {/* Backlog sidebar */}
         <div className="backlog-col">
           <div className="card">
-            <div className="card-header"><div className="card-title">Backlog</div></div>
+            <div className="card-header">
+              <div className="card-title">Backlog</div>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--ink4)' }}>{backlog.length}</span>
+            </div>
+            <div style={{ fontSize: '0.62rem', color: 'var(--ink4)', marginBottom: 8, fontStyle: 'italic' }}>
+              Drag tasks to a time slot or press + Today
+            </div>
             {backlog.length === 0 && <div style={{ color: 'var(--ink4)', fontSize: '0.78rem', textAlign: 'center', padding: '1rem 0' }}>Backlog is empty ✦</div>}
-            {backlog.slice(0, 10).map(t => (
-              <div key={t.id} className="backlog-item">
-                <div style={{ flex: 1, fontSize: '0.78rem', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{t.title}</div>
-                <button className="btn btn-ghost btn-sm" onClick={() => assignBacklog(t.id)} style={{ flexShrink: 0 }}>+ Today</button>
+            {backlog.map(t => (
+              <div
+                key={t.id}
+                className="backlog-item"
+                draggable
+                onDragStart={e => e.dataTransfer.setData('taskId', t.id)}
+              >
+                <div style={{ width: 3, height: 16, borderRadius: 2, background: t.color, flexShrink: 0 }} />
+                <div style={{ flex: 1, fontSize: '0.78rem', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', cursor: 'grab' }}>{t.title}</div>
+                <button className="btn btn-ghost btn-sm" onClick={() => assignBacklog(t.id)} style={{ flexShrink: 0, fontSize: '0.6rem' }}>+ Today</button>
               </div>
             ))}
           </div>

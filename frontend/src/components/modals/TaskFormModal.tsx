@@ -85,6 +85,11 @@ export default function TaskFormModal({ onClose, onSaved, defaultDate, defaultTi
               <div className="field">
                 <label>Date</label>
                 <input type="date" value={date} onChange={e => setDate(e.target.value)} />
+                {!date && (
+                  <div style={{ marginTop: 4, fontSize: '0.68rem', color: 'var(--teal)', fontFamily: 'var(--font-mono)', display: 'flex', alignItems: 'center', gap: 4 }}>
+                    <span style={{ fontSize: '0.8rem' }}>📥</span> No date = goes to Backlog
+                  </div>
+                )}
               </div>
               <div className="field">
                 <label>Time</label>

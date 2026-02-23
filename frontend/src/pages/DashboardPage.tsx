@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from 'react'
 import { dashboardApi, tasksApi, habitsApi, goalsApi } from '@/api/endpoints'
 import { useModalStore } from '@/stores/modalStore'
 import type { DashboardStats, Task, Habit, Goal, TaskStatus } from '@/types'
-import { todayString, formatDateShort } from '@/utils/helpers'
+import { todayString, formatDateLabel } from '@/utils/helpers'
 import toast from 'react-hot-toast'
 import './DashboardPage.css'
 
@@ -22,6 +22,13 @@ export default function DashboardPage() {
 
   useEffect(() => { load() }, [load])
 
+  // Reload when a task is created from the global quick-add
+  useEffect(() => {
+    const handler = () => load()
+    window.addEventListener('meridian:refresh', handler)
+    return () => window.removeEventListener('meridian:refresh', handler)
+  }, [load])
+
   if (!stats) return <div className="empty-state">Loading…</div>
 
   const today = todayString()
@@ -34,15 +41,25 @@ export default function DashboardPage() {
   ]
 
   const upcoming = tasks
-    .filter(t => !t.done && t.date && t.date > today)
-    .sort((a, b) => (a.date || '').localeCompare(b.date || ''))
-    .slice(0, 5)
+    .filter(t => !t.done && t.date && t.date >= today)
+    .sort((a, b) => {
+      const dateCmp = (a.date || '').localeCompare(b.date || '')
+      if (dateCmp !== 0) return dateCmp
+      return (a.time || '99:99').localeCompare(b.time || '99:99')
+    })
+    .slice(0, 8)
 
   const dayName = new Date().toLocaleDateString('en', { weekday: 'short' }).toLowerCase().slice(0, 3)
   const todayHabits = habits.filter(h => h.target_days === 'daily' || (h.target_days || '').includes(dayName))
 
+  const backlogTasks = tasks.filter(t => !t.date)
+
   const onDropKanban = async (taskId: string, newStatus: TaskStatus) => {
-    await tasksApi.update(taskId, { status: newStatus, done: newStatus === 'completed' })
+    // Also set date to today if the task is from backlog
+    const task = tasks.find(t => t.id === taskId)
+    const update: Partial<Task> = { status: newStatus, done: newStatus === 'completed' }
+    if (!task?.date) update.date = today
+    await tasksApi.update(taskId, update)
     if (newStatus === 'completed') toast.success('Done! ✓')
     load()
   }
@@ -111,6 +128,37 @@ export default function DashboardPage() {
             </div>
           ))}
         </div>
+
+        {/* Backlog row under kanban */}
+        {backlogTasks.length > 0 && (
+          <div style={{ marginTop: 10, padding: '8px 0', borderTop: '1px solid var(--line)' }}>
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--ink4)', marginBottom: 6, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+              📥 Backlog — drag to a column above
+            </div>
+            <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+              {backlogTasks.slice(0, 8).map(t => (
+                <div
+                  key={t.id}
+                  className="kanban-card"
+                  draggable
+                  onDragStart={e => e.dataTransfer.setData('taskId', t.id)}
+                  onClick={() => openTaskDetail(t.id)}
+                  style={{ borderLeftColor: t.color, flex: '0 0 auto', maxWidth: 180 }}
+                >
+                  <div className="kanban-card-title">{t.title}</div>
+                  <div className="kanban-card-meta">
+                    <span className={`tag tag-${t.category}`}>{t.category}</span>
+                  </div>
+                </div>
+              ))}
+              {backlogTasks.length > 8 && (
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--ink4)', alignSelf: 'center' }}>
+                  +{backlogTasks.length - 8} more
+                </span>
+              )}
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="grid-2 mb-3">
@@ -139,7 +187,7 @@ export default function DashboardPage() {
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ fontSize: '0.82rem', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{t.title}</div>
                 <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'var(--ink4)' }}>
-                  {formatDateShort(t.date!)}{t.time ? ` · ${t.time}` : ''}
+                  {formatDateLabel(t.date, t.time)}
                 </div>
               </div>
             </div>

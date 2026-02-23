@@ -7,6 +7,8 @@ interface AuthState {
   token: string | null
   loading: boolean
   login: (email: string, password: string) => Promise<void>
+  signup: (email: string, password: string, name: string) => Promise<void>
+  googleLogin: (token: string) => Promise<void>
   logout: () => void
   tryAutoLogin: () => Promise<void>
   updateProfile: (data: Partial<User>) => Promise<void>
@@ -23,17 +25,27 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     set({ user, token, loading: false })
   },
 
+  signup: async (email, password, name) => {
+    const { token, user } = await authApi.signup(email, password, name)
+    localStorage.setItem('meridian_token', token)
+    set({ user, token, loading: false })
+  },
+
+  googleLogin: async (googleToken) => {
+    const { token, user } = await authApi.google(googleToken)
+    localStorage.setItem('meridian_token', token)
+    set({ user, token, loading: false })
+  },
+
   logout: () => {
+    authApi.logout().catch(() => {})
     localStorage.removeItem('meridian_token')
     set({ user: null, token: null })
   },
 
   tryAutoLogin: async () => {
     const token = get().token
-    if (!token) {
-      set({ loading: false })
-      return
-    }
+    if (!token) { set({ loading: false }); return }
     try {
       const user = await authApi.me()
       set({ user, loading: false })

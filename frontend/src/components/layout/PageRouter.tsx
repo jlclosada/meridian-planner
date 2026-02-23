@@ -10,6 +10,7 @@ import GoalsPage from '@/pages/GoalsPage'
 import RoutinesPage from '@/pages/RoutinesPage'
 import NotesPage from '@/pages/NotesPage'
 import AdminPage from '@/pages/AdminPage'
+import ProfilePage from '@/pages/ProfilePage'
 
 const PAGES: Record<string, React.FC> = {
   dashboard: DashboardPage,
@@ -22,6 +23,7 @@ const PAGES: Record<string, React.FC> = {
   routines: RoutinesPage,
   notes: NotesPage,
   admin: AdminPage,
+  profile: ProfilePage,
 }
 
 export default function PageRouter() {

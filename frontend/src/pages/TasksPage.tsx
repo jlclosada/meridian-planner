@@ -19,6 +19,12 @@ export default function TasksPage() {
 
   useEffect(() => { load() }, [load])
 
+  useEffect(() => {
+    const handler = () => load()
+    window.addEventListener('meridian:refresh', handler)
+    return () => window.removeEventListener('meridian:refresh', handler)
+  }, [load])
+
   const today = todayString()
 
   let filtered = tasks
