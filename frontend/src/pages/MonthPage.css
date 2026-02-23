@@ -1,0 +1,10 @@
+.month-grid { display: grid; grid-template-columns: repeat(7, 1fr); border: 1px solid var(--line); border-radius: var(--r2); overflow: hidden; background: white; }
+.month-header-cell { font-family: var(--font-mono); font-size: 0.65rem; color: var(--ink4); text-transform: uppercase; text-align: center; padding: 8px; background: var(--paper2); border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); }
+.month-day { padding: 6px; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); min-height: 85px; }
+.month-day.today { background: var(--cobalt-bg); }
+.month-day.other-month { background: var(--paper2); opacity: 0.5; }
+.month-day-num { font-family: var(--font-mono); font-size: 0.72rem; color: var(--ink3); margin-bottom: 4px; }
+.month-task-pill { font-size: 0.6rem; padding: 1px 5px; border-left: 2px solid; border-radius: 2px; margin-bottom: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor: pointer; transition: opacity 0.1s; }
+.month-task-pill:hover { opacity: 0.75; }
+.month-more { font-family: var(--font-mono); font-size: 0.58rem; color: var(--ink4); }
+

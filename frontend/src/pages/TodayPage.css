@@ -1,0 +1,53 @@
+.day-nav { display: flex; align-items: center; gap: 8px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+.day-title { font-family: var(--font-serif); font-size: 1.2rem; font-weight: 400; color: var(--ink); letter-spacing: -0.02em; }
+.today-badge {
+  font-family: var(--font-mono); font-size: 0.6rem; color: var(--cobalt);
+  background: var(--cobalt-bg); padding: 2px 7px; border-radius: 3px; font-weight: 600;
+}
+
+.today-layout { display: grid; grid-template-columns: 1fr 240px; gap: 1.5rem; }
+.timeline-col { min-width: 0; }
+.backlog-col { min-width: 0; }
+
+.timeline-hour { display: grid; grid-template-columns: 48px 1fr; border-bottom: 1px solid var(--line); min-height: 52px; }
+.hour-label {
+  padding: 6px 8px 0 0; text-align: right;
+  font-family: var(--font-mono); font-size: 0.65rem; color: var(--ink4);
+}
+.timeline-slot { padding: 4px 8px; }
+.timeline-task {
+  border-left: 3px solid; border-radius: var(--r); padding: 6px 10px;
+  margin-bottom: 4px; cursor: pointer; transition: box-shadow 0.12s;
+}
+.timeline-task:hover { box-shadow: var(--shadow-sm); }
+.timeline-task.done { opacity: 0.6; }
+.timeline-event {
+  border-left: 3px solid; border-radius: var(--r); padding: 6px 10px;
+  margin-bottom: 4px; cursor: pointer; background: var(--paper2);
+  transition: background 0.1s;
+}
+.timeline-event:hover { background: var(--paper3); }
+.t-task-title { font-size: 0.82rem; color: var(--ink); }
+.t-task-time { font-family: var(--font-mono); font-size: 0.62rem; color: var(--ink4); }
+.task-check {
+  width: 15px; height: 15px; border-radius: 4px; border: 1.5px solid var(--ink4);
+  flex-shrink: 0; cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: all 0.12s;
+}
+.task-check.checked { background: var(--ink); border-color: var(--ink); }
+.task-check.checked::after { content: '✓'; font-size: 9px; color: var(--paper); font-weight: 700; }
+
+.add-task-inline {
+  font-size: 0.7rem; color: var(--ink5); cursor: pointer; padding: 2px 4px;
+  border-radius: var(--r); transition: color 0.12s;
+}
+.add-task-inline:hover { color: var(--ink3); }
+
+.backlog-item {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 0; border-bottom: 1px solid var(--line);
+}
+.backlog-item:last-child { border-bottom: none; }
+
+@media (max-width: 768px) { .today-layout { grid-template-columns: 1fr; } }
+

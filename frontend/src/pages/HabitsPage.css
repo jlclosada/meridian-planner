@@ -1,0 +1,15 @@
+.habits-matrix { overflow-x: auto; }
+.habits-matrix-header, .habits-matrix-row { display: flex; align-items: stretch; border-bottom: 1px solid var(--line); }
+.hm-habit-col { display: flex; align-items: center; gap: 8px; min-width: 200px; width: 200px; padding: 8px; font-size: 0.82rem; }
+.hm-icon { font-size: 1rem; }
+.hm-name { font-weight: 500; color: var(--ink); }
+.hm-target { font-family: var(--font-mono); font-size: 0.58rem; color: var(--ink4); }
+.hm-day-col { width: 36px; min-width: 36px; text-align: center; font-family: var(--font-mono); font-size: 0.6rem; color: var(--ink4); padding: 4px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.hm-day-col.today { background: var(--cobalt-bg); font-weight: 600; color: var(--cobalt); border-radius: var(--r); }
+.hm-cell { width: 36px; min-width: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 4px 0; }
+.hm-cell.today { background: rgba(59,94,166,0.04); }
+.hm-cell:hover { background: var(--paper2); }
+.hm-dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--ink5); transition: all 0.15s; }
+.hm-dot.filled { transform: scale(1.1); }
+.hm-stat-col { min-width: 60px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 4px 8px; }
+

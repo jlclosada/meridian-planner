@@ -1,0 +1,32 @@
+.week-grid {
+  display: grid; grid-template-columns: 48px repeat(7, 1fr);
+  border: 1px solid var(--line); border-radius: var(--r2); overflow: auto;
+  background: white;
+}
+.week-col-header {
+  padding: 8px; text-align: center; border-bottom: 1px solid var(--line);
+  border-right: 1px solid var(--line); background: var(--paper);
+}
+.week-col-header.today { background: var(--cobalt-bg); }
+.wch-day { font-family: var(--font-mono); font-size: 0.62rem; color: var(--ink4); text-transform: uppercase; }
+.wch-date { font-family: var(--font-serif); font-size: 1.1rem; color: var(--ink); }
+.wch-date.today { color: var(--cobalt); font-weight: 600; }
+.week-time-col {
+  padding: 4px 6px; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line);
+  display: flex; align-items: flex-start; justify-content: flex-end;
+}
+.week-hour-label { font-family: var(--font-mono); font-size: 0.6rem; color: var(--ink5); }
+.week-cell {
+  padding: 2px; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line);
+  min-height: 42px;
+}
+.week-cell.today-col { background: rgba(59,94,166,0.03); }
+.week-task-chip {
+  font-size: 0.62rem; padding: 2px 5px; border-radius: 3px;
+  border-left: 2px solid; cursor: pointer; margin-bottom: 2px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  transition: box-shadow 0.1s;
+}
+.week-task-chip:hover { box-shadow: var(--shadow-sm); }
+.week-task-chip.done-chip { opacity: 0.5; text-decoration: line-through; }
+

@@ -2,30 +2,55 @@
 
 > *Plan beautifully. Live intentionally.*
 
-A full-featured personal productivity SaaS with daily timeline, week/month calendar views, habit tracking, goal management, routines, and notes — all in one warm, minimal, editorial-aesthetic workspace.
+A full-featured personal productivity app with daily timeline, week/month calendar views, habit tracking, goal management, routines, and notes — all in one warm, minimal, editorial-aesthetic workspace.
 
 ---
 
 ## 🚀 Quick Start
 
+### Option 1: Netlify (Recommended)
+
 ```bash
-unzip meridian.zip && cd meridian
+# Deploy to Netlify
+npm install -g netlify-cli
+netlify deploy --prod --dir=frontend
+```
+
+Or connect this repo to [Netlify](https://netlify.com) and it will auto-deploy from the `frontend/` folder.
+
+### Option 2: Local
+
+```bash
+# Just open the file directly
+open frontend/index.html
+```
+
+### Option 3: Docker (optional)
+
+```bash
 docker compose up --build
 open http://localhost
 ```
 
-**Demo login:** `demo@meridian.app` + any password
+**Demo login:** `demo@meridian.app` / `demo` — or create your own account!
 
 ---
 
 ## ✨ Features
 
+### 🔐 User Accounts
+- **Registration** with name, email, password
+- **Login** with email/password
+- **Demo account** with pre-loaded sample data
+- Per-user data isolation (localStorage)
+- Auto-login on return
+
 ### 📅 Planning Views
 | View | Description |
 |------|-------------|
-| **Dashboard** | Stats, weekly chart, habit summary, goal progress, upcoming tasks |
-| **Today** | Timeline view with drag-and-drop scheduling (6am–10pm), backlog sidebar |
-| **Week** | 7-day grid, drag tasks between days and hours |
+| **Dashboard** | Stats, weekly chart, habit summary, goal progress, upcoming tasks & events |
+| **Today** | Timeline view with drag-and-drop scheduling (6am–10pm), events, backlog sidebar |
+| **Week** | 7-day grid with events row, drag tasks between days and hours |
 | **Month** | Full calendar with task/event pills, click to jump to day |
 
 ### ✅ Task Management
@@ -33,6 +58,15 @@ open http://localhost
 - Drag-and-drop between time slots and days
 - Filter by category, status, date
 - Backlog for unscheduled tasks
+
+### 📅 Events
+- Create events with start/end dates, times, location, notes
+- Events appear in **Dashboard** (upcoming section)
+- Events appear in **Today** view (events panel at top)
+- Events appear in **Week** view (dedicated events row)
+- Events appear in **Month** view (calendar pills with 📅 icon)
+- Events appear in **Mini Calendar** (dot indicators)
+- Edit and delete events from any view
 
 ### ⟳ Habit Tracker
 - 28-day heatmap visualization
@@ -53,7 +87,8 @@ open http://localhost
 
 ### ✦ Notes
 - Colorful sticky-note style cards
-- Pinnable notes, full markdown-friendly textarea
+- Pinnable notes, full textarea editing
+- Sort by pinned first, then most recent
 - Quick edit inline
 
 ---
@@ -61,21 +96,46 @@ open http://localhost
 ## 🏗 Architecture
 
 ```
-meridian/
+meridian-planner/
 ├── frontend/          # Single-file SPA (HTML/CSS/JS)
-│   ├── index.html     # ~1,800 lines — complete app
-│   ├── nginx.conf     # Reverse proxy
-│   └── Dockerfile
-├── backend/           # Python Flask REST API
-│   ├── app.py         # 30+ endpoints
+│   ├── index.html     # Complete app — zero backend needed
+│   ├── nginx.conf     # For Docker deployment
+│   └── Dockerfile     # For Docker deployment
+├── backend/           # (Legacy — not needed for Netlify)
+│   ├── app.py
 │   ├── requirements.txt
 │   └── Dockerfile
-└── docker-compose.yml
+├── netlify.toml       # Netlify configuration
+├── docker-compose.yml # Docker deployment (optional)
+└── README.md
 ```
 
 **Design system:** Warm paper tones, Fraunces serif + Geist sans, editorial layout, ink on paper aesthetic
 
-**Stack:** Vanilla JS SPA · Flask · Gunicorn · Nginx · Docker Compose
+**Stack:** Vanilla JS SPA · localStorage · No backend required · Deployable anywhere
+
+**Data persistence:** All data stored in browser localStorage, isolated per user account
+
+---
+
+## 🌐 Deployment on Netlify
+
+1. Push this repo to GitHub
+2. Go to [netlify.com](https://netlify.com) → New Site → Import from Git
+3. Set **Publish directory** to `frontend`
+4. Click Deploy
+5. Done! Your app is live ✦
+
+The `netlify.toml` file is already configured:
+```toml
+[build]
+  publish = "frontend"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+```
 
 ---
 
@@ -85,48 +145,17 @@ meridian/
 |----------|--------|
 | `Cmd/Ctrl + K` | Quick add task |
 | `Esc` | Close modal |
+| `Enter` | Submit login/register form |
 
 ---
 
-## 🌐 API Reference (30 endpoints)
+## 🔧 Notes
 
-```
-POST  /api/auth/login
-GET   /api/auth/me
-PATCH /api/auth/me
-
-GET/POST        /api/tasks
-GET/PATCH/DEL   /api/tasks/:id
-POST            /api/tasks/reorder
-
-GET/POST        /api/habits
-PATCH/DEL       /api/habits/:id
-POST            /api/habits/:id/toggle
-
-GET/POST        /api/events
-PATCH/DEL       /api/events/:id
-
-GET/POST        /api/routines
-PATCH/DEL       /api/routines/:id
-
-GET/POST        /api/goals
-PATCH/DEL       /api/goals/:id
-
-GET/POST        /api/notes
-PATCH/DEL       /api/notes/:id
-
-GET             /api/dashboard
-GET             /api/health
-```
-
----
-
-## 🔧 Production
-
-- Replace `SECRET_KEY` in `docker-compose.yml`
-- Add PostgreSQL/Redis for persistence
-- Add HTTPS via Traefik or Certbot
-- Add authentication with JWT expiration
+- All data persists in `localStorage` — clearing browser data will reset everything
+- Each user account has isolated data
+- The demo account seeds sample data on first login
+- For production with real persistence, add a backend with a database
+- The Docker setup still works but is optional — the app runs as a pure static site
 
 ---
 
